@@ -1,4 +1,5 @@
 @inherits ToSic.Sxc.Dnn.RazorComponent
+@using System.Linq;
 
 @{
     var count = 1;
@@ -11,9 +12,17 @@
     	</div>
     	<div class="col-md-8 order-md-4">
             <h1>
-                #@(count++) @idea.Name
+                #@(count++) @idea.Name @(idea.Journal.Short != null ? "✔" : "")
             </h1>
             @Html.Raw(idea.Description)
+            
+            @if(idea.Journal.Short != null) {
+                <div @Edit.TagToolbar(idea.Journal)>
+                    <hr>
+                    ✔ <strong>@idea.Journal.Short</strong> (@idea.Journal.Date) <br/>
+                    @Html.Raw(idea.Journal.Notes)
+                </div>
+            }
     	</div>
     </div>
 }
